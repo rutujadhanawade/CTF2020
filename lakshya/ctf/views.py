@@ -31,19 +31,3 @@ def signup(request):
 
     elif request.method == 'GET':
         return render(request, 'ctf/signup.html')
-
-def login(request):
-        if request.method == 'POST':
-            username = request.POST['username']
-            password = request.POST['password']
-
-            user = auth.authenticate(username=username, password=password)
-
-            if user is not None:
-                auth.login(request, user)
-                return redirect("ctf/first.html")
-            else:
-                messages.info(request, 'invalid credentials')
-                return redirect('ctf/login.html')
-        else:
-            return render(request, 'ctf/login.html')
