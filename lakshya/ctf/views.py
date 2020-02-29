@@ -43,8 +43,20 @@ def login1(request):
 
         if user is not None:
             login(request, user)
-            return redirect('ctf/first.html')
+            return redirect('ctf/challenges.html')
         else:
             messages.error(request, 'Invalid credentials!')
 
     return render(request, 'ctf/login.html')
+
+def userID(request):
+    current_user = request.user
+    if request.user.is_authenticated:
+        current_user = request.user
+    else:
+        current_user = "Anonymous"
+    #print (current_user.username)
+
+def logout(request):
+    logout(request)
+    return render(request, 'ctf/HOME.html')
