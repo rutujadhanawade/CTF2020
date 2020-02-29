@@ -1,12 +1,16 @@
 # lakshya 2020
 
-run this project using command python3 manage.py runserver
- -> update 1
+
+## update 1
 
 
-signup page done 
+- signup page done 
+- login done
 
-work-
-1. login
-2. models
-3. Question page
+### work remaining-
+1. models
+2. question page (first.html in our project)
+   - challenges should be displayed
+   - input field to accept the answer
+   - answer should be saved in db
+3. logout
