@@ -42,9 +42,13 @@ def login(request):
 
             if user is not None:
                 auth.login(request, user)
-                return redirect("/")
+                return redirect("ctf/first.html")
             else:
                 messages.info(request, 'invalid credentials')
                 return redirect('ctf/login.html')
         else:
             return render(request, 'ctf/login.html')
+
+
+def first(request):
+    return render(request, 'ctf/first.html')
