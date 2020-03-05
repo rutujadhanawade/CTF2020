@@ -6,9 +6,11 @@
 
 - signup page done 
 - login done
+- models done 
 
 ### work remaining-
-1. models
+
+
 2. question page (first.html in our project)
    - challenges should be displayed
    - input field to accept the answer
