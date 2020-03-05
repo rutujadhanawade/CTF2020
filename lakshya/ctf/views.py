@@ -55,4 +55,7 @@ def login(request):
 
 
 def first(request):
+    
+
+
     return render(request, 'ctf/first.html')
