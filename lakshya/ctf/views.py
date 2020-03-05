@@ -21,6 +21,8 @@ def signup(request):
         firstname = request.POST.get('firstname')
         lastname = request.POST.get('lastname')
         year = request.POST.get('year')
+        
+
 
         user = User.objects.create_user(username=username, password=password)
         userprofile = UserProfile(user=user, email=email, phone=phone, clg=clg, dept=dept, firstname=firstname,
@@ -28,7 +30,7 @@ def signup(request):
         userprofile.save()
         login(request, user)
 
-        return render(request, 'ctf/first.html', context={'user': user})
+        return render(request, 'ctf/challenges.html', context={'user': user})
 
     elif request.method == 'GET':
         return render(request, 'ctf/signup.html')
@@ -43,7 +45,7 @@ def login1(request):
 
         if user is not None:
             login(request, user)
-            return render(request, 'ctf/HOME.html')
+            return render(request, 'ctf/challenges.html')
         else:
             messages.error(request, 'Invalid credentials!')
 
@@ -55,9 +57,14 @@ def userID(request):
         current_user = request.user
     else:
         current_user = "Anonymous"
-    #print (current_user.username)
 
 def logout1(request):
     print("into logout")
     logout(request)
     return render(request, 'ctf/HOME.html')
+
+def challenges(request):
+    if request.user.is_authenticated:
+        return render (request, 'ctf/challenges.html')
+    else:
+        return redirect('login1')

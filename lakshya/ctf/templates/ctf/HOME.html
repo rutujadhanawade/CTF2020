@@ -13,6 +13,7 @@
     <button class="btn btn-primary btn-lg" onclick="location.href = '{% url 'signup' %}';" role="button">register</button>
     <button class="btn btn-primary btn-lg" onclick="location.href = '{% url 'login1' %}';" role="button">login</button>
     <button class="btn btn-primary btn-lg" onclick="location.href = '{% url 'logout1' %}';" role="button">logout</button>
+    <button class="btn btn-primary btn-lg" onclick="location.href = '{% url 'challenges' %}';" role="button">challenges</button>
 
     {% if user.is_authenticated %}
     <p>Welcome, {{ user.get_username }}. Thanks for logging in.</p>
