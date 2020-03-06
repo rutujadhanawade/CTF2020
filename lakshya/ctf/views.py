@@ -59,3 +59,7 @@ def first(request):
 
 
     return render(request, 'ctf/first.html')
+
+def logout(request):
+    auth.logout(request)
+    return redirect("/")
