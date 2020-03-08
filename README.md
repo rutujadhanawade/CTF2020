@@ -1,11 +1,14 @@
 # lakshya 2020
 
-##update
+## update
 
 1. INTEGRATION WITH frontend
-
+   - LOGIN PAGE
+   - REGISTER 
+   
 2. Qpage
    - rating for questions
+   - hint section on question page --> score updation
 
 3. leaderboard
    - graph
@@ -21,9 +24,9 @@
 1. question page (first.html in our project)
    - ~~challenges should be displayed~~
    - ~~input field to accept the answer~~
-   - ~~comparing ~~
+   - ~~comparing~~
    - ~~score updation~~
-   - 
+   
 
 2. leaderboard
    - ~~user name~~
@@ -31,8 +34,7 @@
    - sorting according to score
    - sorting acc to time
 
-3. hint section on question page
-   - score updation
+
 
 4. ~~timer~~
 

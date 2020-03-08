@@ -91,7 +91,6 @@ def first(request):
     user = User.objects.get(username=request.user.username)
     userprofile = UserProfile.objects.get(user=user)
     questions = Questions.objects.all().order_by('Qid')
-    var=calc()
     if request.method == 'POST':
         req = request.POST
         Qid = req.get('Qid')
