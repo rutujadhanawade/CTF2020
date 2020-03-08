@@ -59,10 +59,10 @@ def signup(request):
                 userprofile = UserProfile(user=user, email=email, phone=phone, clg=clg, dept=dept, firstname=firstname,
                                           lastname=lastname, year=year, score=score)
                 userprofile.save()
-                # login(request, user)
                 timer()
-                var = calc()
-                return render(request, 'ctf/first.html', context={'user': user, 'time': var})
+                login(request, user)
+
+                return redirect("first")
         else:
             return render(request, 'ctf/signup.html', {'error': "PAssword doesnt match"})
 
@@ -70,7 +70,7 @@ def signup(request):
         return render(request, 'ctf/signup.html')
 
 
-def login(request):
+def login1(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -88,43 +88,49 @@ def login(request):
 
 
 def first(request):
-    user = User.objects.get(username=request.user.username)
-    userprofile = UserProfile.objects.get(user=user)
-    questions = Questions.objects.all().order_by('Qid')
-    if request.method == 'POST':
-        req = request.POST
-        Qid = req.get('Qid')
-        flag = req.get('flag')
-        quest = Questions.objects.get(Qid=int(Qid))
-        quest.Qid = Qid
-        print("in views")
-        print(str(request.user))
-        print(request.user.username)
-        solved = Submission.objects.filter(question=quest,user=userprofile)
-        #print("Third" + str(quest.Qid))
-        #print(str(quest.Qid) + ":" + quest.flag)
-        #print(flag)
-        if flag == quest.flag:
-            if not solved:
-                solved = Submission()
-                userprofile.score += quest.points
-                solved.question = quest
-                solved.user = userprofile
-                quest.solved += 1
-                userprofile.save()
-                solved.save()
+    var = calc()
+    if var != 0:
+        user = User.objects.get(username=request.user.username)
+        userprofile = UserProfile.objects.get(user=user)
+        questions = Questions.objects.all().order_by('Qid')
 
-                print(userprofile.score)
-                print("FLAG IS CORRECT!")
-                messages.success(request, 'FLAG IS CORRECT!')
+        if request.method == 'POST':
+            req = request.POST
+            Qid = req.get('Qid')
+            flag = req.get('flag')
+            quest = Questions.objects.get(Qid=int(Qid))
+            quest.Qid = Qid
+            print("in views")
+            print(str(request.user))
+            print(request.user.username)
+            solved = Submission.objects.filter(question=quest, user=userprofile)
+            # print("Third" + str(quest.Qid))
+            # print(str(quest.Qid) + ":" + quest.flag)
+            # print(flag)
+            if flag == quest.flag:
+                if not solved:
+                    solved = Submission()
+                    userprofile.score += quest.points
+                    solved.question = quest
+                    solved.user = userprofile
+                    solved.sub_time = calc()
+                    quest.solved += 1
+                    userprofile.save()
+                    solved.save()
+
+                    print(userprofile.score)
+                    print("FLAG IS CORRECT!")
+                    messages.success(request, 'FLAG IS CORRECT!')
+                else:
+                    messages.warning(request, 'ALREADY SOLVED!')
             else:
-                messages.warning(request, 'ALREADY SOLVED!')
-        else:
-            print("INCORRECT")
-            messages.success(request, 'FLAG IS WRONG!')
-        userprofile.save()
-        quest.save()
-    return render(request, 'ctf/first.html', {'questions':questions, 'userprofile':userprofile})
+                print("INCORRECT")
+                messages.success(request, 'FLAG IS WRONG!')
+            userprofile.save()
+            quest.save()
+        return render(request, 'ctf/first.html', {'questions': questions, 'userprofile': userprofile, 'time': var})
+    else:
+        return HttpResponse("time is 0:0")
 
 
 def logout(request):
@@ -135,6 +141,8 @@ def logout(request):
 def leaderboard(request):
     data = UserProfile.objects.all()
     return render(request, 'ctf/leaderboard.html', {'data': data})
+
+
 '''''def first(request):
     var = calc()
     if var != 0:

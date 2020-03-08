@@ -31,3 +31,4 @@ class Questions(models.Model):
 class Submission(models.Model):
     question = models.ForeignKey(Questions, on_delete=models.CASCADE)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    sub_time = models.IntegerField(default=0)

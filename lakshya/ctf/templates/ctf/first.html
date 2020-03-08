@@ -6,6 +6,7 @@
 	Hi {{ request.user.username }}
 	<button class="btn btn-primary btn-lg" onclick="location.href = '{% url 'logout' %}';" role="button">logout</button><br>
 	Your score: {{ userprofile.score }}<br>
+	{{ time }}
 </body>
 	<h1>Challenges to solve:</h1>
 </head>
