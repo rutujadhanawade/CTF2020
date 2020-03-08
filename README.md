@@ -10,8 +10,8 @@
    - score updation
 
 2. leaderboard
-   - user name
-   - score
+   - ~~user name~~
+   - ~~score~~
    - sorting according to score
    - sorting acc to time
 
