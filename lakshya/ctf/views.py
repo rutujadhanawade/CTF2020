@@ -15,7 +15,7 @@ def index(request):
 
 def timer():
     start = datetime.datetime.now()
-    starttime = start.hour*60*60 + start.minute*60 + start.second
+    starttime = start.hour * 60 * 60 + start.minute * 60 + start.second
     duration = 7200
     global endtime
     endtime = starttime + int(duration)
@@ -54,7 +54,7 @@ def signup(request):
                 return render(request, 'ctf/signup.html', {'error': "Username Has Already Been Taken"})
             except User.DoesNotExist:
                 user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'])
-                #time = timer()
+                # time = timer()
                 userprofile = UserProfile(user=user, email=email, phone=phone, clg=clg, dept=dept, firstname=firstname,
                                           lastname=lastname, year=year)
                 userprofile.save()
@@ -97,3 +97,8 @@ def first(request):
 def logout(request):
     auth.logout(request)
     return redirect("/")
+
+
+def leaderboard(request):
+    data = UserProfile.objects.all()
+    return render(request, 'ctf/leaderboard.html', {'data': data})
