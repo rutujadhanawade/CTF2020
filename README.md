@@ -16,8 +16,8 @@
    - sorting acc to time
 
 3. hint section on question page
- - score updation
+   - score updation
 
-4. timer
+4. ~~timer~~
 
- 
+

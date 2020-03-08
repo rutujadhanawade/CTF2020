@@ -2,12 +2,39 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.http import HttpResponse
+import datetime
 from .models import UserProfile
 from django.contrib.auth.models import User, auth
+
+endtime = 0
 
 
 def index(request):
     return render(request, 'ctf/HOME.html')
+
+
+def timer():
+    start = datetime.datetime.now()
+    starttime = start.hour*60*60 + start.minute*60 + start.second
+    duration = 7200
+    global endtime
+    endtime = starttime + int(duration)
+    print(starttime)
+    return start
+
+
+def calc():
+    global endtime
+    now = datetime.datetime.now()
+    nowsec = now.hour * 60 * 60 + now.minute * 60 + now.second
+    print(endtime)
+    print(nowsec)
+    diff = endtime - nowsec
+    print(diff)
+    if nowsec <= endtime:
+        return diff
+    else:
+        return 0
 
 
 def signup(request):
@@ -26,11 +53,15 @@ def signup(request):
                 user = User.objects.get(username=request.POST['username'])
                 return render(request, 'ctf/signup.html', {'error': "Username Has Already Been Taken"})
             except User.DoesNotExist:
-                user = User.objects.create_user(username= request.POST['username'],password= request.POST['password'])
-                userprofile = UserProfile(user=user, email=email, phone=phone, clg=clg, dept=dept, firstname=firstname, lastname=lastname, year=year)
+                user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'])
+                #time = timer()
+                userprofile = UserProfile(user=user, email=email, phone=phone, clg=clg, dept=dept, firstname=firstname,
+                                          lastname=lastname, year=year)
                 userprofile.save()
-        # login(request, user)
-                return render(request, 'ctf/first.html', context={'user': user})
+                # login(request, user)
+                timer()
+                var = calc()
+                return render(request, 'ctf/first.html', context={'user': user, 'time': var})
         else:
             return render(request, 'ctf/signup.html', {'error': "PAssword doesnt match"})
 
@@ -47,7 +78,8 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            return redirect('ctf/first.html')
+            timer()
+            return redirect("first")
         else:
             messages.error(request, 'Invalid credentials!')
 
@@ -55,10 +87,12 @@ def login(request):
 
 
 def first(request):
-    
+    var = calc()
+    if var != 0:
+        return render(request, 'ctf/first.html', context={'time': var})
+    else:
+        return HttpResponse("time is 0:0")
 
-
-    return render(request, 'ctf/first.html')
 
 def logout(request):
     auth.logout(request)

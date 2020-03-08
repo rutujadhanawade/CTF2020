@@ -12,6 +12,7 @@ class UserProfile(models.Model):
     dept = models.CharField(max_length=100)
     year = models.CharField(max_length=100)
     score = models.IntegerField(default=0)
+    time = models.TimeField(default="00:00")
 
     def __str__(self):
         return self.user.username
