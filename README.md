@@ -4,9 +4,9 @@
 ## update 6/3/20
 
 1. question page (first.html in our project)
-   - challenges should be displayed
-   - input field to accept the answer
-   - comparing 
+   - DONE : challenges should be displayed
+   - DONE : input field to accept the answer
+   - DONE : comparing 
    - score updation
 
 2. leaderboard

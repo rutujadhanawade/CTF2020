@@ -18,11 +18,13 @@ class UserProfile(models.Model):
 
 
 class Questions(models.Model):
+    Qid = models.IntegerField(default='0')
     Qtitle = models.CharField(max_length=70)
     Qdes = models.CharField(max_length=1000)
     flag = models.CharField(max_length=100, default='pict_CTF{}')
     points = models.IntegerField(default=0)
     submit = models.IntegerField(default=0)
+    solved = models.IntegerField(default=0)
 
 
 class Submission(models.Model):
