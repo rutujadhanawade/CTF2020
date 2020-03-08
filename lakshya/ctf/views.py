@@ -56,7 +56,8 @@ def login(request):
 
 
 def first(request):
-    userprofile = UserProfile()
+    user = User.objects.get(username=request.user.username)
+    userprofile = UserProfile.objects.get(user=user)
     questions = Questions.objects.all().order_by('Qid')
     if (request.method == 'POST'):
         req = request.POST
@@ -67,18 +68,33 @@ def first(request):
         print("in views")
         print(str(request.user))
         print(request.user.username)
+        solved = Submission.objects.filter(question=quest,user=userprofile)
+        #print("Third" + str(quest.Qid))
+        #print(str(quest.Qid) + ":" + quest.flag)
+        #print(flag)
         if (flag == quest.flag):
+            if not solved:
+                solved = Submission()
                 userprofile.score += quest.points
+                solved.question = quest
+                solved.user = userprofile
                 quest.solved += 1
-                #print(userprofile.score)
-                #print("FLAG IS CORRECT!")
+                userprofile.save()
+                solved.save()
+
+                print(userprofile.score)
+                print("FLAG IS CORRECT!")
                 messages.success(request, 'FLAG IS CORRECT!')
+            else:
+                messages.warning(request, 'ALREADY SOLVED!')
         else:
             print("INCORRECT")
             messages.success(request, 'FLAG IS WRONG!')
+        userprofile.save()
         quest.save()
     return render(request, 'ctf/first.html', {'questions':questions, 'userprofile':userprofile})
 
 def logout(request):
     auth.logout(request)
     return redirect("/")
+

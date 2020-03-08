@@ -7,7 +7,7 @@
    - DONE : challenges should be displayed
    - DONE : input field to accept the answer
    - DONE : comparing 
-   - score updation
+   - DONE : score updation
 
 2. leaderboard
    - user name
