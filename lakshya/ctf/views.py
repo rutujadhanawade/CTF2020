@@ -43,35 +43,26 @@ def calc():
 
 def signup(request):
     if request.method == 'POST':
+        recid = request.POST.get('reciept_id')
         username = request.POST.get('username')
         password = request.POST.get('password')
-        email = request.POST.get('email')
-        phone = request.POST.get('phone')
-        clg = request.POST.get('clg')
-        dept = request.POST.get('dept')
-        firstname = request.POST.get('firstname')
-        lastname = request.POST.get('lastname')
-        year = request.POST.get('year')
         score = 0
-        if request.POST['password'] == request.POST['confirm_password']:
-            try:
-                user = User.objects.get(username=request.POST['username'])
-                return render(request, 'ctf/signup.html', {'error': "Username Has Already Been Taken"})
-            except User.DoesNotExist:
-                user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'])
-                # time = timer()
-                userprofile = UserProfile(user=user, email=email, phone=phone, clg=clg, dept=dept, firstname=firstname,
-                                          lastname=lastname, year=year, score=score)
-                userprofile.save()
-                timer()
-                login(request, user)
 
-                return redirect("first")
-        else:
-            return render(request, 'ctf/signup.html', {'error': "PAssword doesnt match"})
+        try:
+            user = User.objects.get(username=username)
+            return render(request, 'ctf/register.html', {'error': "Username Has Already Been Taken"})
+        except User.DoesNotExist:
+            user = User.objects.create_user(username=username, password=password)
+            # time = timer()
+            userprofile = UserProfile(user=user, Rid=recid, score=score)
+            userprofile.save()
+            timer()
+            login(request, user)
+
+            return redirect("inst")
 
     elif request.method == 'GET':
-        return render(request, 'ctf/signup.html')
+        return render(request, 'ctf/register.html')
 
 
 def login1(request):
