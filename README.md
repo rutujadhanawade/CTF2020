@@ -3,12 +3,21 @@
 ## update
 
 1. INTEGRATION WITH frontend
-   - LOGIN PAGE
-   - REGISTER 
-   
+- login
+- Home Page
+- Login Page
+- Register Page
+- Challenge / Quests Page
+- 404 Not Found Page
+- Leaderboard Page
+- About / Rules Page
+- Instructions Page   
+
+
 2. Qpage
    - rating for questions
-   - hint section on question page --> score updation
+   - hint on question page 
+     --- score updation
 
 3. leaderboard
    - graph
