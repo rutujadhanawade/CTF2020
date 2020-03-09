@@ -13,6 +13,10 @@ def index(request):
     return render(request, 'ctf/index.html')
 
 
+def inst(request):
+    return render(request, 'ctf/instructions.html')
+
+
 def timer():
     start = datetime.datetime.now()
     starttime = start.hour * 60 * 60 + start.minute * 60 + start.second
@@ -80,7 +84,7 @@ def login1(request):
         if user is not None:
             auth.login(request, user)
             timer()
-            return redirect("first")
+            return redirect("inst")
         else:
             messages.error(request, 'Invalid credentials!')
 
