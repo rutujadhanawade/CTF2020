@@ -3,8 +3,8 @@
 ## update
 
 1. INTEGRATION WITH frontend
-- login
-- Home Page
+
+- Home Page 
 - Login Page
 - Register Page
 - Challenge / Quests Page
@@ -15,9 +15,9 @@
 
 
 2. Qpage
-   - rating for questions
-   - hint on question page 
-     --- score updation
+- rating for questions
+- hint on question page 
+   - score updation
 
 3. leaderboard
    - graph

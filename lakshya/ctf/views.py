@@ -22,7 +22,6 @@ def about(request):
 
 
 def inst(request):
-
     return render(request, 'ctf/instructions.html')
 
 
