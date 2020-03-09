@@ -13,6 +13,10 @@ def index(request):
     return render(request, 'ctf/index.html')
 
 
+def about(request):
+    return render(request, 'ctf/about.html')
+
+
 def inst(request):
 
     return render(request, 'ctf/instructions.html')
