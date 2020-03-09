@@ -10,7 +10,7 @@ endtime = 0
 
 
 def index(request):
-    return render(request, 'ctf/HOME.html')
+    return render(request, 'ctf/index.html')
 
 
 def timer():
