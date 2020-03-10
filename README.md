@@ -5,7 +5,7 @@
 :star2: :star2: :star2: :star2: :star2: :star2: 
 
 1. Qpage
-- [] submitting response
+- [x] submitting response
 - [] score updation
 - [] storing difficulty level
 - [] hint logic
