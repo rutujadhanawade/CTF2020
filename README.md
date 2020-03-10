@@ -1,8 +1,31 @@
 # lakshya 2020
 
-## update
 
-1. INTEGRATION WITH frontend
+## final update 
+:star2: :star2: :star2: :star2: :star2: :star2: 
+
+1. Qpage
+- [] submitting response
+- [] score updation
+- [] storing difficulty level
+- [] hint logic
+     * [] score updation 
+- [] solved and score tag 
+- [] 
+
+2. leaderboard
+- [] username, time, score printing
+- [] graph
+- [] sorting according to score
+- [] sorting acc to time
+
+3. [] logout button
+
+
+
+### update
+
+1.~~INTEGRATION WITH frontend~~
 
 - Home Page 
 - Login Page
