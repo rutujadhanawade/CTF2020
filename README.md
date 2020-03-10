@@ -5,9 +5,9 @@
 :star2: :star2: :star2: :star2: :star2: :star2: 
 
 1. Qpage
-- [] submitting response
-- [] score updation
-- [] storing difficulty level
+- [x] submitting response
+- [x] score updation
+- [x] storing difficulty level
 - [] hint logic
      * [] score updation 
 - [] solved and score tag 
@@ -15,8 +15,8 @@
 2. leaderboard
 - [x] username, time, score printing
 - [] graph
-- [] sorting according to score
-- [x] sorting acc to time
+- [x] sorting according to score
+- [] sorting acc to time
 
 3. [] logout button
 
