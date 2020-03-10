@@ -54,59 +54,67 @@
                     <h1 class="display-1 bold color_white content__title">QUESTS<span class="vim-caret">&nbsp;</span></h1>
                     <p class="text-grey text-spacey hackerFont lead mb-5">
                         Its time to show the world what you can do!
+                        {% for message in messages %}
+       		            <h3>{{message}}</h3>
+   		                {% endfor %}
                     </p>
                 </div>
             </div>
-            {% for question in questions %}
-            <div class="row hackerFont">
+
+            <div class="row hackerFont"> {% for question in questions %}
                 <div class="col-md-4 mb-3">
                     <div class="card category_web">
-                        <div class="card-header solved" data-target="#problem_id_1" data-toggle="collapse" aria-expanded="false" aria-controls="problem_id_1">
-                           {{ question.Qtitle }} <span class="badge">solved</span> <span class="badge">80 points</span>
+                        <div class="card-header solved" data-target="#problem_id_{{ question.Qid }}" data-toggle="collapse" aria-expanded="false" aria-controls="problem_id_{{ question.Qid }}">
+                           {{ question.Qtitle }} <span class="badge">solved</span> <span class="badge">{{ question.points }} points</span>
                         </div>
-                        <div id="problem_id_1" class="collapse card-body">
+                        <div id="problem_id_{{ question.Qid }}" class="collapse card-body">
                             <blockquote class="card-blockquote">
                                 <div style="display: flex;">
                                     <h6 class="solvers">Solvers:{{ question.solved }} &nbsp;<span class="color_danger">Difficulty:</span></h6>
-                                    <div class="pl-2"><canvas style="width:80px;height:15px" id="problem_id_1_chart"></canvas></div>
+                                    <div class="pl-2"><canvas style="width:80px;height:15px" id="problem_id_{{ question.Qid }}_chart"></canvas></div>
                                 </div>
                                 <p>{{ question.Qdes }}</p>
+                                <form method="POST" action="/QUEST">
+				                {% csrf_token %}
                                 <a target="_blank" href="#!" class="btn btn-outline-secondary btn-shadow"><span class="fa fa-download mr-2"></span>Download</a>
                                 <a href="#hint" data-toggle="modal" data-target="#hint" class="btn btn-outline-secondary btn-shadow"><span class="far fa-lightbulb mr-2"></span>Hint</a>
                                 <div class="input-group mt-3" >
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" value="VE" id="customRadio1_p1" name="customRadio_p1" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio1_p1" checked=false>Very Easy</label>
+                                        <input type="radio" value="VE" id="customRadio1_p{{ question.Qid }}" name="customRadio" class="custom-control-input">
+                                        <label class="custom-control-label" for="customRadio1_p{{ question.Qid }}" checked=false>Very Easy</label>
                                     </div>
                                     <div class="ht-tm-element custom-control custom-radio">
-                                        <input type="radio" value="E" id="customRadio2_p1" name="customRadio_p1" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio2_p1">Easy</label>
+                                        <input type="radio" value="E" id="customRadio2_p{{ question.Qid }}" name="customRadio" class="custom-control-input">
+                                        <label class="custom-control-label" for="customRadio2_p{{ question.Qid }}">Easy</label>
                                     </div>
                                     <div class="ht-tm-element custom-control custom-radio">
-                                        <input type="radio" value="M" id="customRadio3_p1" name="customRadio_p1" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio3_p1">Medium</label>
+                                        <input type="radio" value="M" id="customRadio3_p{{ question.Qid }}" name="customRadio" class="custom-control-input">
+                                        <label class="custom-control-label" for="customRadio3_p{{ question.Qid }}">Medium</label>
                                     </div>
                                     <div class="ht-tm-element custom-control custom-radio">
-                                        <input type="radio" value="H" id="customRadio4_p1" name="customRadio_p1" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio4_p1">Hard</label>
+                                        <input type="radio" value="H" id="customRadio4_p{{ question.Qid }}" name="customRadio" class="custom-control-input">
+                                        <label class="custom-control-label" for="customRadio4_p{{ question.Qid }}">Hard</label>
                                     </div>
                                     <div class="ht-tm-element custom-control custom-radio">
-                                        <input type="radio" value="VH" id="customRadio5_p1" name="customRadio_p1" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio5_p1">Very Hard</label>
+                                        <input type="radio" value="VH" id="customRadio5_p{{ question.Qid }}" name="customRadio" class="custom-control-input">
+                                        <label class="custom-control-label" for="customRadio5_p{{ question.Qid }}">Very Hard</label>
                                     </div>
                                 </div>
                                 <div class="input-group mt-3">
                                     <input type="text" name="flag" class="form-control" placeholder="Enter Flag" aria-label="Enter Flag" aria-describedby="basic-addon2">
+                                    <input type="hidden" name="Qid" id="Qid" value={{question.Qid}}>
                                     <div class="input-group-append">
-                                     <button id="submit_p1" class="btn btn-outline-secondary" name="{{ questions.Qid }}" type="submit">Go!</button>
+
+                                     <button  class="btn btn-outline-secondary"  formmethod="post" type="submit">Go!</button>
 
                                     </div>
                                 </div>
+                                </form>
                             </blockquote>
                         </div>
                     </div>
-                </div>
-                {% endfor %}
+                </div> {% endfor %}
+
              
                 <div class="col-md-4 mb-3">
                     <div class="card category_reversing">
