@@ -136,7 +136,7 @@ def logout(request):
 
 def leaderboard(request):
     data = UserProfile.objects.all()
-    return render(request, 'ctf/leaderboard.html', {'data': data})
+    return render(request, 'ctf/hackerboard.html', {'data': data})
 
 
 '''''def first(request):
