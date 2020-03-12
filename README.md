@@ -11,6 +11,10 @@
 - [] hint logic
      * [] score updation 
 - [] solved and score tag 
+- chart
+- colour models
+- timer
+- file , time, 
 
 2. leaderboard
 - [x] username, time, score printing

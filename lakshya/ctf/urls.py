@@ -11,5 +11,8 @@ urlpatterns = [
     path('instructions', views.inst, name='inst'),
     path('QUEST', views.first, name='first'),
     path('logout', views.logout, name='logout'),
+    path('check', views.check, name='c'),
+    path('hint', views.hint, name='h'),
+
     path('leaderboard', views.leaderboard, name='leaderboard')
 ]

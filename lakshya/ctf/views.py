@@ -25,6 +25,80 @@ def inst(request):
     return render(request, 'ctf/instructions.html')
 
 
+def hint(request):
+    if request.method == 'POST':
+        question = Questions.objects.get(Qid=request.POST.get('id'))
+        hint = question.Hint
+        questionPoints = question.points
+        user = User.objects.get(username=request.user.username)
+        userprofile = UserProfile.objects.get(user=user)
+        try:
+            solved = Submission.objects.filter(question=question, user=userprofile)
+            return HttpResponse(hint)
+        except Submission.DoesNotExist:
+            solved = Submission()
+            userprofile.score -= questionPoints*0.1
+            solved.question = question
+            solved.user = userprofile
+            solved.curr_score = userprofile.score
+            solved.save()
+            userprofile.save()
+            return HttpResponse(hint)
+    return render(request, 'ctf/404.html')
+
+
+def check(request):
+    user = User.objects.get(username=request.user.username)
+    userprofile = UserProfile.objects.get(user=user)
+    questions = Questions.objects.all().order_by('Qid')
+    if request.method == 'POST':
+        req = request.POST
+        Qid = req.get('Qid')
+        flag = req.get('flag')
+        level = req.get('customRadio')
+        quest = Questions.objects.get(Qid=int(Qid))
+        quest.Qid = Qid
+        if level == None :
+            return HttpResponse("-1")
+        else:
+            quest.level = level
+            quest.save()
+            print("in views")
+            print(str(request.user))
+            print(request.user.username)
+            solved = Submission.objects.filter(question=quest, user=userprofile)
+            # print("Third" + str(quest.Qid))
+            # print(str(quest.Qid) + ":" + quest.flag)
+            # print(flag)
+            if flag == quest.flag:
+                if not solved:
+                    solved = Submission()
+                    userprofile.score += quest.points
+                    solved.question = quest
+                    solved.user = userprofile
+                    time = calc()
+                  #  solved.sub_time = tim
+                  #  user.time = solved.sub_time
+                    quest.solved += 1
+                    userprofile.totlesub += 1
+                    userprofile.save()
+                    solved.save()
+
+
+                    print(userprofile.score)
+                    print("FLAG IS CORRECT!")
+                    return HttpResponse('1')
+
+                else:
+                    return HttpResponse('2')
+            else:
+                print("INCORRECT")
+                return HttpResponse('0')
+            userprofile.save()
+            quest.save()
+    return HttpResponse("")
+
+
 def timer():
     start = datetime.datetime.now()
     starttime = start.hour * 60 * 60 + start.minute * 60 + start.second
@@ -90,55 +164,59 @@ def login1(request):
     return render(request, 'ctf/login.html')
 
 
+
+
 def first(request):
     var = calc()
     if var != 0:
         user = User.objects.get(username=request.user.username)
         userprofile = UserProfile.objects.get(user=user)
         questions = Questions.objects.all().order_by('Qid')
-
-        if request.method == 'POST':
-            req = request.POST
-            Qid = req.get('Qid')
-            flag = req.get('flag')
-            level = req.get('customRadio')
-            print(level)
-            quest = Questions.objects.get(Qid=int(Qid))
-            quest.Qid = Qid
-            quest.level = level
-            quest.save()
-            print("in views")
-            print(str(request.user))
-            print(request.user.username)
-            solved = Submission.objects.filter(question=quest, user=userprofile)
-            # print("Third" + str(quest.Qid))
-            # print(str(quest.Qid) + ":" + quest.flag)
-            # print(flag)
-            if flag == quest.flag:
-                if not solved:
-                    solved = Submission()
-                    userprofile.score += quest.points
-                    solved.question = quest
-                    solved.user = userprofile
-                    solved.sub_time = calc()
-                    user.time = solved.sub_time
-                    quest.solved += 1
-                    userprofile.totlesub += 1
-                    userprofile.save()
-                    solved.save()
-
-
-                    print(userprofile.score)
-                    print("FLAG IS CORRECT!")
-                    messages.success(request, 'FLAG IS CORRECT!')
-                else:
-                    messages.warning(request, 'ALREADY SOLVED!')
-            else:
-                print("INCORRECT")
-                messages.success(request, 'FLAG IS WRONG!')
-            userprofile.save()
-            quest.save()
-        return render(request, 'ctf/quests.html', {'questions': questions, 'userprofile': userprofile, 'time': var})
+        submission = Submission.objects.filter(user=userprofile)
+        submission_q_id = Submission.objects.values_list('question_id', flat = True).filter(user=userprofile)
+        # if request.method == 'POST':
+        #     req = request.POST
+        #     Qid = req.get('Qid')
+        #     flag = req.get('flag')
+        #     level = req.get('customRadio')
+        #     print(level)
+        #     quest = Questions.objects.get(Qid=int(Qid))
+        #     quest.Qid = Qid
+        #     quest.level = level
+        #     quest.save()
+        #     print("in views")
+        #     print(str(request.user))
+        #     print(request.user.username)
+        #     solved = Submission.objects.filter(question=quest, user=userprofile)
+        #     # print("Third" + str(quest.Qid))
+        #     # print(str(quest.Qid) + ":" + quest.flag)
+        #     # print(flag)
+        #     if flag == quest.flag:
+        #         if not solved:
+        #             solved = Submission()
+        #             userprofile.score += quest.points
+        #             solved.question = quest
+        #             solved.user = userprofile
+        #             time = calc()
+        #           #  solved.sub_time = tim
+        #           #  user.time = solved.sub_time
+        #             quest.solved += 1
+        #             userprofile.totlesub += 1
+        #             userprofile.save()
+        #             solved.save()
+        #
+        #
+        #             print(userprofile.score)
+        #             print("FLAG IS CORRECT!")
+        #             messages.success(request, 'FLAG IS CORRECT!')
+        #         else:
+        #             messages.warning(request, 'ALREADY SOLVED!')
+        #     else:
+        #         print("INCORRECT")
+        #         messages.success(request, 'FLAG IS WRONG!')
+        #     userprofile.save()
+        #     quest.save()
+        return render(request, 'ctf/quests.html', {'questions': questions, 'userprofile': userprofile, 'time': var, 'submission': submission,'submission_q_id':submission_q_id })
     else:
         return HttpResponse("time is 0:0")
 
@@ -151,9 +229,11 @@ def logout(request):
 def leaderboard(request):
     data = UserProfile.objects.all().order_by("-score")
 
-
-    return render(request, 'ctf/hackerboard.html', {'data': data})
-
+    var = calc()
+    if var != 0:
+        return render(request, 'ctf/hackerboard.html', context={'time': var, 'data': data})
+    else:
+        return HttpResponse("time is 0:0")
 
 '''''def first(request):
     var = calc()
