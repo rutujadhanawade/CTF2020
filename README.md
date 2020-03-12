@@ -4,27 +4,28 @@
 ## final update 
 :star2: :star2: :star2: :star2: :star2: :star2: 
 
+
 1. Qpage
 - [x] submitting response
 - [x] score updation
 - [x] storing difficulty level
-- [] hint logic
-     * [] score updation 
-- [] solved and score tag 
+- [ ] hint logic
+     * [ ] score updation 
+- [ ] solved tag 
 - chart
 - colour models
 - timer
-- file , time, 
+
 
 2. leaderboard
 - [x] username, time, score printing
-- [] graph
+- [ ] graph
 - [x] sorting according to score
-- [] sorting acc to time
+- [ ] sorting acc to time
 
-3. [] logout button
+3. [ ] logout button
 
-
+4. SESSION
 
 ### update
 
