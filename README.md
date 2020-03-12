@@ -6,6 +6,7 @@
 
 
 1. Qpage
+
 - [x] submitting response
 - [x] score updation
 - [x] storing difficulty level
@@ -19,7 +20,7 @@
 
 2. leaderboard
 - [x] username, time, score printing
-- [ ] graph
+- [ ] graph ...  submit time, pass time, 
 - [x] sorting according to score
 - [ ] sorting acc to time
 

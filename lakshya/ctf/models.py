@@ -51,6 +51,6 @@ class Questions(models.Model):
 class Submission(models.Model):
     question = models.ForeignKey(Questions, on_delete=models.CASCADE)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    sub_time = models.TimeField(default="00:00")
     curr_score = models.IntegerField(default=0)
     solved = models.IntegerField(default=0)
+    sub_time = models.TimeField(default="00:00")

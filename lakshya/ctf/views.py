@@ -3,10 +3,12 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.http import HttpResponse
 import datetime
+import time
 from .models import UserProfile, Questions, Submission
 from django.contrib.auth.models import User, auth
 
 endtime = 0
+duration = 2700
 
 
 def index(request):
@@ -37,7 +39,7 @@ def hint(request):
             return HttpResponse(hint)
         except Submission.DoesNotExist:
             solved = Submission()
-            userprofile.score -= questionPoints*0.1
+            userprofile.score -= questionPoints * 0.1
             solved.question = question
             solved.user = userprofile
             solved.curr_score = userprofile.score
@@ -58,7 +60,7 @@ def check(request):
         level = req.get('customRadio')
         quest = Questions.objects.get(Qid=int(Qid))
         quest.Qid = Qid
-        if level == None :
+        if level == None:
             return HttpResponse("-1")
         else:
             quest.level = level
@@ -76,14 +78,18 @@ def check(request):
                     userprofile.score += quest.points
                     solved.question = quest
                     solved.user = userprofile
-                    time = calc()
-                  #  solved.sub_time = tim
-                  #  user.time = solved.sub_time
+                    solved.curr_score = userprofile.score
+
+                    sec = calc()
+                    sec = duration-sec
+                    solved.sub_time = time.strftime("%H:%M:%S", time.gmtime(sec))
+                   # solved.sub_time = '{}:{}:{}'.format(hour, min, sec)
+                    print(solved.sub_time)
                     quest.solved += 1
+                    #solved.solved = 1
                     userprofile.totlesub += 1
                     userprofile.save()
                     solved.save()
-
 
                     print(userprofile.score)
                     print("FLAG IS CORRECT!")
@@ -102,7 +108,7 @@ def check(request):
 def timer():
     start = datetime.datetime.now()
     starttime = start.hour * 60 * 60 + start.minute * 60 + start.second
-    duration = 7200
+    global duration
     global endtime
     endtime = starttime + int(duration)
     print(starttime)
@@ -113,8 +119,6 @@ def calc():
     global endtime
     now = datetime.datetime.now()
     nowsec = now.hour * 60 * 60 + now.minute * 60 + now.second
-    print(endtime)
-    print(nowsec)
     diff = endtime - nowsec
     print(diff)
     if nowsec <= endtime:
@@ -156,7 +160,9 @@ def login1(request):
 
         if user is not None:
             auth.login(request, user)
-            timer()
+            userprofile = UserProfile.objects.get(user=user)
+            userprofile.time = timer()
+            userprofile.save()
             return redirect("inst")
         else:
             messages.error(request, 'Invalid credentials!')
@@ -164,16 +170,14 @@ def login1(request):
     return render(request, 'ctf/login.html')
 
 
-
-
-def first(request):
+def Quest(request):
     var = calc()
     if var != 0:
         user = User.objects.get(username=request.user.username)
         userprofile = UserProfile.objects.get(user=user)
         questions = Questions.objects.all().order_by('Qid')
         submission = Submission.objects.filter(user=userprofile)
-        submission_q_id = Submission.objects.values_list('question_id', flat = True).filter(user=userprofile)
+        submission_q_id = Submission.objects.values_list('question_id', flat=True).filter(user=userprofile)
         # if request.method == 'POST':
         #     req = request.POST
         #     Qid = req.get('Qid')
@@ -216,7 +220,9 @@ def first(request):
         #         messages.success(request, 'FLAG IS WRONG!')
         #     userprofile.save()
         #     quest.save()
-        return render(request, 'ctf/quests.html', {'questions': questions, 'userprofile': userprofile, 'time': var, 'submission': submission,'submission_q_id':submission_q_id })
+        return render(request, 'ctf/quests.html',
+                      {'questions': questions, 'userprofile': userprofile, 'time': var, 'submission': submission,
+                       'submission_q_id': submission_q_id})
     else:
         return HttpResponse("time is 0:0")
 
@@ -227,13 +233,11 @@ def logout(request):
 
 
 def leaderboard(request):
-    data = UserProfile.objects.all().order_by("-score")
+    data = Submission.objects.all().order_by("-curr_score", "-sub_time")
+    #data = UserProfile.objects.all.order_by("-score")
 
-    var = calc()
-    if var != 0:
-        return render(request, 'ctf/hackerboard.html', context={'time': var, 'data': data})
-    else:
-        return HttpResponse("time is 0:0")
+    return render(request, 'ctf/hackerboard.html', context={'data': data})
+
 
 '''''def first(request):
     var = calc()

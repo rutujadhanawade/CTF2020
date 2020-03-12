@@ -65,7 +65,7 @@
                 <div class="col-md-6 mb-3">
                     <div class="card {{ question.category }}">
 
-                        {% if question.Qid in submission_q_id %}
+                        {% if question.Qid in submission %}
                             {%for sub in submission %}
                                 {% if question.Qid == sub.question_id and sub.solved == 1 %}
                                     <div class="card-header solved " data-target="#problem_id_{{ question.Qid }}" data-toggle="collapse" aria-expanded="false" aria-controls="problem_id_{{ question.Qid }}">

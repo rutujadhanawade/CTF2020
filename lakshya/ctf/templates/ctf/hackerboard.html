@@ -60,7 +60,7 @@
                     <h1 class="display-1 bold color_white content__title text-center"><span class="color_danger">HACKER</span>BOARD<span class="vim-caret">&nbsp;</span></h1>
                     <p class="text-grey lead text-spacey text-center hackerFont">
                         Where the world get's ranked!
-                        {{time}}
+
                     </p>
                     <div class="row justify-content-center my-5">
                         <div class="col-xl-10">
@@ -83,11 +83,11 @@
                         </thead>
                         <tbody>{% for i in data %}
                             <tr>
-                                <th scope="row">{{ i.id }}</th>
+                                <th scope="row">{{ forloop.counter }}</th>
                                 <td>{{ i.user }}</td>
-                                <td>{{ i.solved }}</td>
-                                <td>{{ i.time }}</td>
-                                <td>{{ i.score }}</td>
+                                <td>{{ i.user.totlesub }}</td>
+                                <td>{{ i.sub_time }}</td>
+                                <td>{{ i.user.score }}</td>
                             </tr> {% endfor %}
                            <!-- <tr>
                                 <th scope="row">2</th>
@@ -130,7 +130,9 @@
             label: 'ashawe',
             borderColor: 'blue',
             steppedLine: true,
-            data: [{
+            data: [
+
+            {
                 x: '2017-01-06 00:00:00',
                 y: 00
             }, {
