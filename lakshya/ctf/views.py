@@ -14,6 +14,7 @@ def index(request):
 
 
 def inst(request):
+
     return render(request, 'ctf/instructions.html')
 
 
@@ -123,7 +124,7 @@ def first(request):
                 messages.success(request, 'FLAG IS WRONG!')
             userprofile.save()
             quest.save()
-        return render(request, 'ctf/first.html', {'questions': questions, 'userprofile': userprofile, 'time': var})
+        return render(request, 'ctf/quests.html', {'questions': questions, 'userprofile': userprofile, 'time': var})
     else:
         return HttpResponse("time is 0:0")
 
