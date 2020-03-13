@@ -13,16 +13,17 @@
 - [ ] hint logic
      * [ ] score updation 
 - [ ] solved tag 
-- chart
-- colour models
-- timer
+- [ ]chart
+- [ ]colour models
+- [ ]timer
 
 
 2. leaderboard
 - [x] username, time, score printing
-- [ ] graph ...  submit time, pass time, 
+- [ ] graph ... 
+- [ ] submit time, pass time, 
 - [x] sorting according to score
-- [ ] sorting acc to time
+- [x ] sorting acc to time
 
 3. [ ] logout button
 
