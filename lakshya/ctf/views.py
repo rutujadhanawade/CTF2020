@@ -65,13 +65,9 @@ def check(request):
         else:
             quest.level = level
             quest.save()
-            print("in views")
-            print(str(request.user))
-            print(request.user.username)
+
             solved = Submission.objects.filter(question=quest, user=userprofile)
-            # print("Third" + str(quest.Qid))
-            # print(str(quest.Qid) + ":" + quest.flag)
-            # print(flag)
+
             if flag == quest.flag:
                 if not solved:
                     solved = Submission()
@@ -83,10 +79,11 @@ def check(request):
                     sec = calc()
                     sec = duration-sec
                     solved.sub_time = time.strftime("%H:%M:%S", time.gmtime(sec))
+                    userprofile.latest_sub_time = solved.sub_time
                    # solved.sub_time = '{}:{}:{}'.format(hour, min, sec)
                     print(solved.sub_time)
                     quest.solved += 1
-                    #solved.solved = 1
+                    solved.solved = 1
                     userprofile.totlesub += 1
                     userprofile.save()
                     solved.save()
@@ -192,9 +189,7 @@ def Quest(request):
         #     print(str(request.user))
         #     print(request.user.username)
         #     solved = Submission.objects.filter(question=quest, user=userprofile)
-        #     # print("Third" + str(quest.Qid))
-        #     # print(str(quest.Qid) + ":" + quest.flag)
-        #     # print(flag)
+        #
         #     if flag == quest.flag:
         #         if not solved:
         #             solved = Submission()
@@ -233,10 +228,11 @@ def logout(request):
 
 
 def leaderboard(request):
-    data = Submission.objects.all().order_by("-curr_score", "-sub_time")
-    #data = UserProfile.objects.all.order_by("-score")
+    #data = Submission.objects.all().order_by("-curr_score", "-sub_time")
+    user = UserProfile.objects.all().order_by("-score")
 
-    return render(request, 'ctf/hackerboard.html', context={'data': data})
+    sub = Submission.objects.all().filter(user=user)[:4]
+    return render(request, 'ctf/hackerboard.html', context={'sub': sub, 'user': user})
 
 
 '''''def first(request):

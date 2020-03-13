@@ -54,9 +54,7 @@
                     <h1 class="display-1 bold color_white content__title">QUESTS<span class="vim-caret">&nbsp;</span></h1>
                     <p class="text-grey text-spacey hackerFont lead mb-5">
                         Its time to show the world what you can do!
-                        {% for message in messages %}
-       		            <h3>{{message}}</h3>
-   		                {% endfor %}
+
                     </p>
                 </div>
             </div>
@@ -81,10 +79,10 @@
                         <div id="problem_id_{{ question.Qid }}" class="collapse card-body">
                             <blockquote class="card-blockquote">
                                 <div style="display: flex;">
-                                    <h6 class="solvers">Solvers:{{ question.solved }} &nbsp;<span class="color_danger">Difficulty:</span></h6>
+                                    <h6 class="solvers">Solvers:{{ question.solved }} &nbsp;<span class="color_danger">Difficulty:</span> </h6>
                                     <div class="pl-2"><canvas style="width:80px;height:15px" id="problem_id_{{ question.Qid }}_chart"></canvas></div>
                                 </div>
-                                <p>{{ question.Qdes }}</p>
+                                <p>{{ question.Qdes }}</p> <p>{{ question.category }}</p>
                                 <form method="POST"  id="my_event_form">
 				                {% csrf_token %}
                                 <a target="_blank" href="#!" class="btn btn-outline-secondary btn-shadow"><span class="fa fa-download mr-2"></span>Download</a>
@@ -416,7 +414,7 @@
         </div>
         <script>
             var dataset = [
-                [41, 42, 43, 0], // keep the zero here
+                [51, 2, 5, 0], // keep the zero here
                 [10, 9, 8, 0],
                 [21, 16, 23,  0],
                 [71, 12, 13,  0],
