@@ -241,3 +241,16 @@ def leaderboard(request):
         return render(request, 'ctf/first.html', context={'time': var})
     else:
         return HttpResponse("time is 0:0")'''
+# def leaderboard(request):
+#     #data = Submission.objects.all().order_by("-curr_score", "-sub_time")
+#     sorteduser = UserProfile.objects.all().order_by("-score")
+#     # count =4
+#     # sub_list = []
+#     # for element in sorteduser:
+#     #     if count < 4:
+#     #         sub = Submission.objects.get(user=element.user)
+#     #         sub_list.append(sub)
+#     #         print(sub_list)
+#     #         count -= 1
+#     #     else:
+#     #         return render(request, 'ctf/hackerboard.html', context={'sub': sub_list, 'user': sorteduser})
