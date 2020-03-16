@@ -81,13 +81,22 @@
                                 <th>Score</th>
                             </tr>
                         </thead>
-                        <tbody>{% for i in user %}
+                        <tbody>
+<!--                        {% for i in user %}-->
+<!--                            <tr>-->
+<!--                                <th scope="row">{{ forloop.counter }}</th>-->
+<!--                                <td>{{ i.user }}</td>-->
+<!--                                <td>{{ i.totlesub }}</td>-->
+<!--                                <td>{{ i.latest_sub_time }}</td>-->
+<!--                                <td>{{ i.score }}</td>-->
+<!--                            </tr> {% endfor %}-->
+                       {% for i in sub %}
                             <tr>
                                 <th scope="row">{{ forloop.counter }}</th>
                                 <td>{{ i.user }}</td>
-                                <td>{{ i.totlesub }}</td>
-                                <td>{{ i.latest_sub_time }}</td>
-                                <td>{{ i.score }}</td>
+                                <td>{{ i.question.id }}</td>
+                                <td>{{ i.sub_time }}</td>
+                                <td>{{ i.curr_score }}</td>
                             </tr> {% endfor %}
                            <!-- <tr>
                                 <th scope="row">2</th>

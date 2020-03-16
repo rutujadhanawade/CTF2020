@@ -173,8 +173,9 @@ def Quest(request):
         user = User.objects.get(username=request.user.username)
         userprofile = UserProfile.objects.get(user=user)
         questions = Questions.objects.all().order_by('Qid')
-        submission = Submission.objects.filter(user=userprofile)
-        submission_q_id = Submission.objects.values_list('question_id', flat=True).filter(user=userprofile)
+        submission = Submission.objects.filter(user=userprofile).order_by('question_id')
+
+       # submission_q_id = Submission.objects.values_list('question_id', flat=True).filter(user=userprofile)
         # if request.method == 'POST':
         #     req = request.POST
         #     Qid = req.get('Qid')
@@ -216,8 +217,7 @@ def Quest(request):
         #     userprofile.save()
         #     quest.save()
         return render(request, 'ctf/quests.html',
-                      {'questions': questions, 'userprofile': userprofile, 'time': var, 'submission': submission,
-                       'submission_q_id': submission_q_id})
+                      {'questions': questions, 'userprofile': userprofile, 'time': var, 'submission': submission})
     else:
         return HttpResponse("time is 0:0")
 
@@ -229,10 +229,11 @@ def logout(request):
 
 def leaderboard(request):
     #data = Submission.objects.all().order_by("-curr_score", "-sub_time")
-    user = UserProfile.objects.all().order_by("-score")
+    sorteduser = UserProfile.objects.all().order_by("-score")
 
-    sub = Submission.objects.all().filter(user=user)[:4]
-    return render(request, 'ctf/hackerboard.html', context={'sub': sub, 'user': user})
+    sub = Submission.objects.all().order_by('-user__score')
+    print(sub)
+    return render(request, 'ctf/hackerboard.html', context={'sub': sub, 'user': sorteduser})
 
 
 '''''def first(request):
