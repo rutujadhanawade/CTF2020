@@ -83,7 +83,7 @@ def check(request):
                     # solved.sub_time = '{}:{}:{}'.format(hour, min, sec)
                     print(solved.sub_time)
                     quest.solved += 1
-                    solved.solved = 1
+                    #solved.solved = 1
                     userprofile.totlesub += 1
                     userprofile.save()
                     solved.save()
@@ -175,47 +175,6 @@ def Quest(request):
         questions = Questions.objects.all().order_by('Qid')
         submission = Submission.objects.filter(user=userprofile).order_by('question_id')
 
-        # submission_q_id = Submission.objects.values_list('question_id', flat=True).filter(user=userprofile)
-        # if request.method == 'POST':
-        #     req = request.POST
-        #     Qid = req.get('Qid')
-        #     flag = req.get('flag')
-        #     level = req.get('customRadio')
-        #     print(level)
-        #     quest = Questions.objects.get(Qid=int(Qid))
-        #     quest.Qid = Qid
-        #     quest.level = level
-        #     quest.save()
-        #     print("in views")
-        #     print(str(request.user))
-        #     print(request.user.username)
-        #     solved = Submission.objects.filter(question=quest, user=userprofile)
-        #
-        #     if flag == quest.flag:
-        #         if not solved:
-        #             solved = Submission()
-        #             userprofile.score += quest.points
-        #             solved.question = quest
-        #             solved.user = userprofile
-        #             time = calc()
-        #           #  solved.sub_time = tim
-        #           #  user.time = solved.sub_time
-        #             quest.solved += 1
-        #             userprofile.totlesub += 1
-        #             userprofile.save()
-        #             solved.save()
-        #
-        #
-        #             print(userprofile.score)
-        #             print("FLAG IS CORRECT!")
-        #             messages.success(request, 'FLAG IS CORRECT!')
-        #         else:
-        #             messages.warning(request, 'ALREADY SOLVED!')
-        #     else:
-        #         print("INCORRECT")
-        #         messages.success(request, 'FLAG IS WRONG!')
-        #     userprofile.save()
-        #     quest.save()
         return render(request, 'ctf/quests.html',
                       {'questions': questions, 'userprofile': userprofile, 'time': var, 'submission': submission})
     else:
@@ -251,9 +210,21 @@ def leaderboard(request):
 '''''def first(request):
     var = calc()
     if var != 0:
-        return render(request, 'ctf/first.html', context={'time': var})
+        return render(request, 'ctf/.html', context={'time': var})
     else:
         return HttpResponse("time is 0:0")'''
 # def leaderboard(request):
 #     #data = Submission.objects.all().order_by("-curr_score", "-sub_time")
 #     sorteduser = UserProfile.objects.all().order_by("-score")
+# if user is not None:
+#             auth.login(request, user)
+#             try:
+#                 userprofile = UserProfile.objects.get(user=user)
+#                 userprofile.time = timer()
+#                 userprofile.save()
+#                 return redirect("inst")
+#             except user.DoesNotExist:
+#                 return render(request, 'ctf/404.html')
+#
+#         else:
+#             return render(request, 'ctf/404.html')

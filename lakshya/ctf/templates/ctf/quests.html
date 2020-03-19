@@ -64,15 +64,9 @@
                 <div class="col-md-6 mb-3">
                     <div class="card {{ question.category }}">
 
-
-
-                                             <div class="card-header solved " data-target="#problem_id_{{ question.Qid }}" data-toggle="collapse" aria-expanded="false" aria-controls="problem_id_{{ question.Qid }}">
-                                       {{ question.Qtitle }}<span class="badge">solved</span> <span class="badge">{{ question.points }} points</span>
-                                    </div>
-
-
-
-
+              <div class="card-header solved " data-target="#problem_id_{{ question.Qid }}" data-toggle="collapse" aria-expanded="false" aria-controls="problem_id_{{ question.Qid }}">
+                 {{ question.Qtitle }}<span class="badge">solved</span> <span class="badge">{{ question.points }} points</span>
+                  </div>
 
 
                         <div id="problem_id_{{ question.Qid }}" class="collapse card-body">
@@ -412,6 +406,7 @@
             </div>
         </div>
         <script>
+
             var dataset = [
                 [51, 2, 5, 0], // keep the zero here
                 [10, 9, 8, 0],
