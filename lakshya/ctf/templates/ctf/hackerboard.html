@@ -82,22 +82,22 @@
                             </tr>
                         </thead>
                         <tbody>
-<!--                        {% for i in user %}-->
-<!--                            <tr>-->
-<!--                                <th scope="row">{{ forloop.counter }}</th>-->
-<!--                                <td>{{ i.user }}</td>-->
-<!--                                <td>{{ i.totlesub }}</td>-->
-<!--                                <td>{{ i.latest_sub_time }}</td>-->
-<!--                                <td>{{ i.score }}</td>-->
-<!--                            </tr> {% endfor %}-->
-                       {% for i in sub %}
+                        {% for i in user %}
                             <tr>
                                 <th scope="row">{{ forloop.counter }}</th>
                                 <td>{{ i.user }}</td>
-                                <td>{{ i.question.id }}</td>
-                                <td>{{ i.sub_time }}</td>
-                                <td>{{ i.curr_score }}</td>
+                                <td>{{ i.totlesub }}</td>
+                                <td>{{ i.latest_sub_time }}</td>
+                                <td>{{ i.score }}</td>
                             </tr> {% endfor %}
+<!--                     -->
+<!--                            <tr>-->
+<!--                                <th scope="row">{{ forloop.counter }}</th>-->
+<!--                                <td>{{ i.user }}</td>-->
+<!--                                <td>{{ i.question.id }}</td>-->
+<!--                                <td>{{ i.sub_time }}</td>-->
+<!--                                <td>{{ i.curr_score }}</td>-->
+<!--                            </tr> -->
                            <!-- <tr>
                                 <th scope="row">2</th>
                                 <td>CR007</td>
@@ -135,8 +135,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script>
-        var s1 = {
-            label: 'ashawe',
+
+  {% for i in sub %}
+        var s{{ forloop.counter }} = {
+            label: '{{ i.user }}',
             borderColor: 'blue',
             steppedLine: true,
             data: [
@@ -146,25 +148,11 @@
                 y: 00
             }, {
                 x: '2017-01-06 00:07:00',
-                y: 100
-            }, {
-                x: '2017-01-06 00:15:40',
-                y: 300
-            }, {
-                x: '2017-01-06 00:18:10',
-                y: 260
-            }, {
-                x: '2017-01-06 00:20:40',
-                y: 350
-            }, {
-                x: '2017-01-06 00:30:20',
-                y: 400
-            }, {
-                x: '2017-01-06 00:40:10',
-                y: 550
-            }, ]
+                y: {{ i.curr_score }}
+            },
+            ]
         };
-
+{% endfor %}
         var s3 = {
             label: 'anonymous',
             borderColor: 'green',
@@ -256,7 +244,7 @@
         var chart = new Chart(ctx, {
             type: 'line',
             data: {
-                datasets: [s1, s2, s3, s4]
+                datasets: [s2, s3, s4]
             },
             options: {
                 scales: {
