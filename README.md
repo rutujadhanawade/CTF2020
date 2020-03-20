@@ -13,9 +13,9 @@
 - [  ] hint logic
      * [  ] score updation 
 - [  ] solved tag 
-- [x]chart
-- [x]colour models
-- [x]timer
+- [x] chart
+- [x] colour models
+- [x] timer
 
 
 2. leaderboard
