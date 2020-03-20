@@ -174,7 +174,7 @@ var userlist = [];
         var chart = new Chart(ctx, {
             type: 'line',
             data: {
-                datasets: [s1, s2, s3, s4, s5]
+                datasets: [ {% for u in user|slice:"5" %}  {% cycle 's1' 's2' 's3' 's4' 's5' %}, {% endfor %}]
             },
             options: {
                 scales: {

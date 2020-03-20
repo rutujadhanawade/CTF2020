@@ -64,15 +64,18 @@
                 <div class="col-md-6 mb-3">
                     <div class="card {{ question.category }}">
 
-              <div class="card-header solved " data-target="#problem_id_{{ question.Qid }}" data-toggle="collapse" aria-expanded="false" aria-controls="problem_id_{{ question.Qid }}">
-                 {{ question.Qtitle }}<span class="badge">solved</span> <span class="badge">{{ question.points }} points</span>
-                  </div>
+                        
+                        {#% if question.Qid in submission %#}
 
+                             <div class="card-header " data-target="#problem_id_{{ question.Qid }}" data-toggle="collapse" aria-expanded="false" aria-controls="problem_id_{{ question.Qid }}">
+                             {{ question.Easy }}  {{ question.Qtitle }} <span class="badge">{{ question.points }} points</span>
+                            </div>
+                        {#%endif%#}
 
                         <div id="problem_id_{{ question.Qid }}" class="collapse card-body">
                             <blockquote class="card-blockquote">
                                 <div style="display: flex;">
-                                    <h6 class="solvers">Solvers:{{ question.solved }} &nbsp;<span class="color_danger">Difficulty:</span> </h6>
+                                    <h6 class="solvers">Solvers:{{ question.solved_by }} &nbsp;<span class="color_danger">Difficulty:</span> </h6>
                                     <div class="pl-2"><canvas style="width:80px;height:15px" id="problem_id_{{ question.Qid }}_chart"></canvas></div>
                                 </div>
                                 <p>{{ question.Qdes }}</p> <p>{{ question.category }}</p>
@@ -379,7 +382,7 @@
 <!--                        </a>-->
 <!--                    </div>-->
 <!--                </div>-->
-<!--            </div>-->
+            </div>
             <div class="row hackerFont justify-content-center mt-5">
                 <div class="col-md-12">
                     Chart Difficulties:
@@ -404,16 +407,15 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <script>
 
-            var dataset = [
-                [51, 2, 5, 0], // keep the zero here
-                [10, 9, 8, 0],
-                [21, 16, 23,  0],
-                [71, 12, 13,  0],
-                [31, 5, 23,  0],
-                [11, 2, 13,  0],
+
+       var dataset = [
+       {% for question in questions %}
+                [ {{ question.Easy }}, {{ question.Med }}, {{ question.Hard }}, 0],
+           {% endfor %}
             ]
 
             function getBarChartData(i) {

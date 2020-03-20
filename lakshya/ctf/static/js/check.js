@@ -60,7 +60,7 @@ function checkAnswer(form)
               }
               else if(data.trim()=="1")
               {
-                $('input').val("solved");
+               // $('input').val("solved");
                 $.notify({
                       message: 'Flag is correct!'
                     },{

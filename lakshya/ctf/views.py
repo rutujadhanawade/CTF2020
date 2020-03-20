@@ -64,6 +64,13 @@ def check(request):
             return HttpResponse("-1")
         else:
             quest.level = level
+            if level == 'E':
+                quest.Easy += 1
+            elif level == 'M':
+                quest.Med += 1
+            else:
+                quest.Hard += 1
+            print(quest.Easy, quest.Med, quest.Hard)
             quest.save()
 
             solved = Submission.objects.filter(question=quest, user=userprofile)
@@ -82,12 +89,12 @@ def check(request):
                     userprofile.latest_sub_time = solved.sub_time
                     # solved.sub_time = '{}:{}:{}'.format(hour, min, sec)
                     print(solved.sub_time)
-                    quest.solved += 1
-                    #solved.solved = 1
+                    quest.solved_by += 1
+                    solved.solved = 1
                     userprofile.totlesub += 1
                     userprofile.save()
                     solved.save()
-
+                    quest.save()
                     print(userprofile.score)
                     print("FLAG IS CORRECT!")
                     return HttpResponse('1')
@@ -97,8 +104,6 @@ def check(request):
             else:
                 print("INCORRECT")
                 return HttpResponse('0')
-            userprofile.save()
-            quest.save()
     return HttpResponse("")
 
 
@@ -173,7 +178,8 @@ def Quest(request):
         user = User.objects.get(username=request.user.username)
         userprofile = UserProfile.objects.get(user=user)
         questions = Questions.objects.all().order_by('Qid')
-        submission = Submission.objects.filter(user=userprofile).order_by('question_id')
+        submission = Submission.objects.values().filter(user=userprofile).order_by('question_id')
+        print(submission)
 
         return render(request, 'ctf/quests.html',
                       {'questions': questions, 'userprofile': userprofile, 'time': var, 'submission': submission})
