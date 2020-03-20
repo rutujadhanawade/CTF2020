@@ -10,12 +10,12 @@
 - [x] submitting response
 - [x] score updation
 - [x] storing difficulty level
-- [ ] hint logic
-     * [ ] score updation 
-- [ ] solved tag 
-- [ ]chart
-- [ ]colour models
-- [ ]timer
+- [  ] hint logic
+     * [  ] score updation 
+- [  ] solved tag 
+- [x]chart
+- [x]colour models
+- [x]timer
 
 
 2. leaderboard
