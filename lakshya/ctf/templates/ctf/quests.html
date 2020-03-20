@@ -68,7 +68,7 @@
                         {#% if question.Qid in submission %#}
 
                              <div class="card-header " data-target="#problem_id_{{ question.Qid }}" data-toggle="collapse" aria-expanded="false" aria-controls="problem_id_{{ question.Qid }}">
-                             {{ question.Easy }}  {{ question.Qtitle }} <span class="badge">{{ question.points }} points</span>
+                             {{ question.Qtitle }} <span class="badge">{{ question.points }} points</span>
                             </div>
                         {#%endif%#}
 
@@ -78,7 +78,7 @@
                                     <h6 class="solvers">Solvers:{{ question.solved_by }} &nbsp;<span class="color_danger">Difficulty:</span> </h6>
                                     <div class="pl-2"><canvas style="width:80px;height:15px" id="problem_id_{{ question.Qid }}_chart"></canvas></div>
                                 </div>
-                                <p>{{ question.Qdes }}</p> <p>{{ question.category }}</p>
+                                <p>{{ question.Qdes }}</p>
                                 <form method="POST"  id="my_event_form">
 				                {% csrf_token %}
                                 <a target="_blank" href="#!" class="btn btn-outline-secondary btn-shadow"><span class="fa fa-download mr-2"></span>Download</a>

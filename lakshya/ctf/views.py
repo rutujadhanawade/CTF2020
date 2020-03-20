@@ -194,7 +194,7 @@ def logout(request):
 
 def leaderboard(request):
     # data = Submission.objects.all().order_by("-curr_score", "-sub_time")
-    sorteduser = UserProfile.objects.all().order_by("-score")
+    sorteduser = UserProfile.objects.all().order_by("-score","latest_sub_time")
     sub = Submission.objects.values().order_by('-user__score', 'user', 'sub_time')
     print(sub)
     count = 4
