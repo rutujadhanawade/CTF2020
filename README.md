@@ -10,8 +10,8 @@
 - [x] submitting response
 - [x] score updation
 - [x] storing difficulty level
-- [  ] hint logic
-     * [  ] score updation 
+- [x] hint logic
+     * [x] score updation
 - [  ] solved tag 
 - [x] chart
 - [x] colour models
