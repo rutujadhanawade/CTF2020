@@ -30,22 +30,27 @@ def inst(request):
 def hint(request):
     if request.method == 'POST':
         question = Questions.objects.get(Qid=request.POST.get('id'))
-        hint = question.Hint
+        print("hint of" + question.Qtitle)
+        hint1 = question.Hint
+        print(hint1)
         questionPoints = question.points
         user = User.objects.get(username=request.user.username)
         userprofile = UserProfile.objects.get(user=user)
         try:
-            solved = Submission.objects.filter(question=question, user=userprofile)
-            return HttpResponse(hint)
+            solved = Submission.objects.get(question=question, user=userprofile)
+            print(solved)
+            return HttpResponse(hint1)
         except Submission.DoesNotExist:
             solved = Submission()
+            print("--marks")
             userprofile.score -= questionPoints * 0.1
+            print(userprofile.score)
             solved.question = question
             solved.user = userprofile
             solved.curr_score = userprofile.score
             solved.save()
             userprofile.save()
-            return HttpResponse(hint)
+            return HttpResponse(hint1)
     return render(request, 'ctf/404.html')
 
 
@@ -73,7 +78,7 @@ def check(request):
             print(quest.Easy, quest.Med, quest.Hard)
             quest.save()
 
-            solved = Submission.objects.filter(question=quest, user=userprofile)
+            solved = Submission.objects.filter(question=quest, user=userprofile, solved=1)
 
             if flag == quest.flag:
                 if not solved:
@@ -197,19 +202,12 @@ def leaderboard(request):
     sorteduser = UserProfile.objects.all().order_by("-score","latest_sub_time")
     sub = Submission.objects.values().order_by('-user__score', 'user', 'sub_time')
     print(sub)
-    count = 4
+
     sub_list = []
     for element in sorteduser:
-        if count <= 4:
-            sub = Submission.objects.values().filter(user_id=element.id)
-            # sub.submission_set.all()
-            # print(sub.submission_set)
-            sub_list.append(sub)
-            print(sub_list)
-            count -= 1
-        else:
-            return render(request, 'ctf/hackerboard.html', context={'sub': sub_list, 'user': sorteduser})
-
+        sub = Submission.objects.values().filter(user_id=element.id)
+        sub_list.append(sub)
+        print(sub_list)
     return render(request, 'ctf/hackerboard.html', context={'sub': sub_list, 'user': sorteduser})
 
 

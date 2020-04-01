@@ -64,13 +64,9 @@
                 <div class="col-md-6 mb-3">
                     <div class="card {{ question.category }}">
 
-                        
-                        {#% if question.Qid in submission %#}
-
-                             <div class="card-header " data-target="#problem_id_{{ question.Qid }}" data-toggle="collapse" aria-expanded="false" aria-controls="problem_id_{{ question.Qid }}">
-                             {{ question.Qtitle }} <span class="badge">{{ question.points }} points</span>
-                            </div>
-                        {#%endif%#}
+ <div class="card-header solved " data-target="#problem_id_{{ question.Qid }}" data-toggle="collapse" aria-expanded="false" aria-controls="problem_id_{{ question.Qid }}">
+                 {{ question.Qtitle }}<span class="badge">solved</span> <span class="badge">{{ question.points }} points</span>
+                  </div>
 
                         <div id="problem_id_{{ question.Qid }}" class="collapse card-body">
                             <blockquote class="card-blockquote">
