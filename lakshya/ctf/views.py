@@ -184,12 +184,20 @@ def Quest(request):
         userprofile = UserProfile.objects.get(user=user)
         questions = Questions.objects.all().order_by('Qid')
         submission = Submission.objects.values().filter(user=userprofile).order_by('question_id')
-        print(submission)
 
+        solvedQue = []
+        for que in questions:
+            solvedQue.append(' ')
+
+        for sub in submission:
+            if sub['solved'] == 1:
+                solvedQue[sub['question_id'] - 1] = 'solved'
+
+        print(solvedQue)
         return render(request, 'ctf/quests.html',
-                      {'questions': questions, 'userprofile': userprofile, 'time': var, 'submission': submission})
+                      {'questions': questions, 'userprofile': userprofile, 'time': var, 'submission': submission, 'solvedQue': solvedQue})
     else:
-        return HttpResponse("time is 0:0")
+        return render(request, 'ctf/404.html')
 
 
 def logout(request):
