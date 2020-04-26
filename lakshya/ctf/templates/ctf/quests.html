@@ -64,12 +64,12 @@
 
             <div class="row hackerFont">
 
-                {% for question in questions; i in solvedQue  %}
+                {% for question in questions %}
                 <div class="col-md-6 mb-3">
                     <div class="card {{ question.category }}">
 
- <div class="card-header {{i}}" data-target="#problem_id_{{ question.Qid }}" data-toggle="collapse" aria-expanded="false" aria-controls="problem_id_{{ question.Qid }}">
-                 {{ question.Qtitle }}<span class="badge">{{i}}</span> <span class="badge">{{ question.points }} points</span>
+ <div class="card-header " data-target="#problem_id_{{ question.Qid }}" data-toggle="collapse" aria-expanded="false" aria-controls="problem_id_{{ question.Qid }}">
+                 {{ question.Qtitle }}<span class="badge"></span> <span class="badge">{{ question.points }} points</span>
                   </div>
 
 <!--                        <div class="card-header solved " data-target="#problem_id_{{ question.Qid }}" data-toggle="collapse" aria-expanded="false" aria-controls="problem_id_{{ question.Qid }}">-->
@@ -85,7 +85,7 @@
                                 <p>{{ question.Qdes }}</p>
                                 <form method="POST"  id="my_event_form">
 				                {% csrf_token %}
-                                <a target="_blank" href="#!" class="btn btn-outline-secondary btn-shadow"><span class="fa fa-download mr-2"></span>Download</a>
+                                <a target="_blank" href="/Uploads/{{ question.file }}" class="btn btn-outline-secondary btn-shadow"><span class="fa fa-download mr-2"></span>Download</a>
                                 <a href="#hint" data-toggle="modal" data-target="#hint" class="btn btn-outline-secondary btn-shadow" onclick="getHint({{question.Qid}})"><span class="far fa-lightbulb mr-2"></span>Hint</a>
                                 <div class="input-group mt-3" >
                                     <div class="ht-tm-element custom-control custom-radio">
