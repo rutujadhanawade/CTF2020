@@ -64,12 +64,12 @@
 
             <div class="row hackerFont">
 
-                {% for question in questions %}
+                {% for question, i in zipped %}
                 <div class="col-md-6 mb-3">
                     <div class="card {{ question.category }}">
 
- <div class="card-header " data-target="#problem_id_{{ question.Qid }}" data-toggle="collapse" aria-expanded="false" aria-controls="problem_id_{{ question.Qid }}">
-                 {{ question.Qtitle }}<span class="badge"></span> <span class="badge">{{ question.points }} points</span>
+ <div class="card-header {{i}}" data-target="#problem_id_{{ question.Qid }}" data-toggle="collapse" aria-expanded="false" aria-controls="problem_id_{{ question.Qid }}">
+                 {{ question.Qtitle }}<span class="badge">{{i}}</span> <span class="badge">{{ question.points }} points</span>
                   </div>
 
 <!--                        <div class="card-header solved " data-target="#problem_id_{{ question.Qid }}" data-toggle="collapse" aria-expanded="false" aria-controls="problem_id_{{ question.Qid }}">-->

@@ -93,4 +93,5 @@ function getHint(hintId)
             $('#hintParagraph').html(data);
             }
           });
+
 }

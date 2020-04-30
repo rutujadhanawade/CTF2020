@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 import datetime
 import time
 from .models import UserProfile, Questions, Submission
@@ -9,6 +10,8 @@ from django.contrib.auth.models import User, auth
 
 endtime = 0
 duration = 2700
+
+#solvedQue = ['', '', '', '']
 
 
 def index(request):
@@ -87,7 +90,9 @@ def check(request):
                     solved.question = quest
                     solved.user = userprofile
                     solved.curr_score = userprofile.score
-
+                    #global solvedQue
+                    #solvedQue[quest.Qid] = 'solved'
+                    print(quest.Qid)
                     sec = calc()
                     sec = duration - sec
                     solved.sub_time = time.strftime("%H:%M:%S", time.gmtime(sec))
@@ -100,7 +105,8 @@ def check(request):
                     userprofile.save()
                     solved.save()
                     quest.save()
-                    print(userprofile.score)
+
+                    print(solvedQue)
                     print("FLAG IS CORRECT!")
                     return HttpResponse('1')
 
@@ -177,6 +183,7 @@ def login1(request):
     return render(request, 'ctf/login.html')
 
 
+@login_required(login_url="/login")
 def Quest(request):
     var = calc()
     if var != 0:
@@ -186,6 +193,7 @@ def Quest(request):
         submission = Submission.objects.values().filter(user=userprofile).order_by('question_id')
 
         solvedQue = []
+
         for que in questions:
             solvedQue.append(' ')
 
@@ -193,9 +201,11 @@ def Quest(request):
             if sub['solved'] == 1:
                 solvedQue[sub['question_id'] - 1] = 'solved'
 
-        print(solvedQue)
+        zipped = zip(questions, solvedQue)
+        print(zipped)
         return render(request, 'ctf/quests.html',
-                      {'questions': questions, 'userprofile': userprofile, 'time': var, 'submission': submission, 'solvedQue': solvedQue})
+                      {'questions': questions,'zipped': zipped, 'userprofile': userprofile, 'time': var, 'submission': submission,
+                       'solvedQue': solvedQue})
     else:
         return render(request, 'ctf/404.html')
 
@@ -207,16 +217,19 @@ def logout(request):
 
 def leaderboard(request):
     # data = Submission.objects.all().order_by("-curr_score", "-sub_time")
-    sorteduser = UserProfile.objects.all().order_by("-score","latest_sub_time")
+    sorteduser = UserProfile.objects.all().order_by("-score", "latest_sub_time")
     sub = Submission.objects.values().order_by('-user__score', 'user', 'sub_time')
     print(sub)
-
+    try:
+        user = User.objects.get(username=request.user.username)
+    except User.DoesNotExist:
+        user = None
     sub_list = []
     for element in sorteduser:
         sub = Submission.objects.values().filter(user_id=element.id)
         sub_list.append(sub)
         print(sub_list)
-    return render(request, 'ctf/hackerboard.html', context={'sub': sub_list, 'user': sorteduser})
+    return render(request, 'ctf/hackerboard.html', context={'sub': sub_list, 'user': sorteduser, 'curr_user': user})
 
 
 '''''def first(request):
