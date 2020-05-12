@@ -1,11 +1,5 @@
 # lakshya 2020
 
-## Getting started with this project
-kindly follow these steps inorde
-''' 
-	hello
-'''
-
 
 
 ## final update 
@@ -19,7 +13,7 @@ kindly follow these steps inorde
 - [x] storing difficulty level
 - [x] hint logic
      * [x] score updation
-- [  ] solved tag 
+- [x] solved tag 
 - [x] chart
 - [x] colour models
 - [x] timer
@@ -32,9 +26,9 @@ kindly follow these steps inorde
 - [x] sorting according to score
 - [x] sorting acc to time
 
-3. [ ] logout button
+3. [x] logout button
 
-4. SESSION
+4. [x] SESSION
 
 ### update
 
