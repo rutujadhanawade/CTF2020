@@ -19,7 +19,8 @@ category = [(WEB, 'category_web'), (REVERSE, 'category_reversing'), (STEG, 'cate
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    Rid = models.CharField(max_length=100, default="EINC-5e5a")  # reciept id
+    # Rid = models.CharField(max_length=100, default="EINC-5e5a")
+    isPlayed = models.IntegerField(default=0)# reciept id
     score = models.IntegerField(default=0)
     totlesub = models.IntegerField(default=0)
     latest_sub_time = models.CharField(default="00:00", max_length=10)

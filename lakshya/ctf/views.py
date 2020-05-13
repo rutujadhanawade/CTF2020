@@ -23,7 +23,11 @@ def error(request):
 
 
 def about(request):
-    return render(request, 'ctf/about.html')
+    try:
+        user = User.objects.get(username=request.user.username)
+    except User.DoesNotExist:
+        user = None
+    return render(request, 'ctf/about.html', context={'curr_user': user})
 
 
 def inst(request):
@@ -142,7 +146,7 @@ def calc():
         return 0
 
 
-def signup(request):
+def register(request):
     if request.method == 'POST':
         recid = request.POST.get('reciept_id')
         username = request.POST.get('username')
@@ -195,27 +199,27 @@ def Quest(request):
         questions = Questions.objects.all().order_by('Qid')
         submission = Submission.objects.values().filter(user=userprofile).order_by('question_id')
 
-        solvedque = []
-
-        for que in questions:
-            solvedque.append('')
+        # solvedque = []
+        #
+        # for que in questions:
+        #     solvedque.append('')
 
         for sub in submission:
             if sub['solved'] == 1:
                 request.session["solved"][sub['question_id']-1] = 'solved'
-                #solvedque[sub['question_id'] - 1] = 'solved'
+                # solvedque[sub['question_id'] - 1] = 'solved'
         request.session.save()
         zipped = zip(questions, request.session["solved"])
         print(zipped)
         return render(request, 'ctf/quests.html',
-                      {'questions': questions,'zipped': zipped, 'user': userprofile, 'time': var, 'submission': submission, 'solvedque': solvedque})
+                      {'questions': questions,'zipped': zipped, 'user': userprofile, 'time': var, 'submission': submission})
     else:
         return render(request, 'ctf/404.html')
 
 
 def logout(request):
     auth.logout(request)
-    return redirect("/")
+    return redirect('/leaderboard')
 
 
 def leaderboard(request):
