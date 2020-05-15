@@ -2,6 +2,33 @@
 
 
 
+#### Running Locally 
+Lakshya CTF is designed using the [Django framework](https://djangoproject.com). Building the project requires PIP3 and Python 3. It is recommended to install all the Python dependencies in a [virtual environment](https://pypi.org/project/virtualenv/). 
+
+To get started, create a virtual environment - 
+
+```bash
+
+pip3 install virtualenv
+virtualenv venv
+source venv/bin/activate 
+pip3 install django
+
+
+```
+
+Migrate the Django SQLite database before running the server. 
+
+```bash
+cd CTF2020/lakshya
+python3 manage.py makemigrations  
+python3 manage.py migrate
+python3 manage.py runserver
+
+```
+
+
+
 ## final update 
 :star2: :star2: :star2: :star2: :star2: :star2: 
 
