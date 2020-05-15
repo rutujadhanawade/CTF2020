@@ -11,7 +11,7 @@ from django.contrib.auth.models import User, auth
 endtime = 0
 duration = 2700
 
-#solvedQue = ['', '', '', '']
+ques = 4
 
 
 def index(request):
@@ -90,9 +90,9 @@ def check(request):
                     solved.question = quest
                     solved.user = userprofile
                     solved.curr_score = userprofile.score
-                    #global solvedQue
-                    #solvedQue[quest.Qid] = 'solved'
-                    print(quest.Qid)
+                    #global solvedque
+                    #solvedque[quest.Qid] = 'solved'
+                    print(Qid)
                     sec = calc()
                     sec = duration - sec
                     solved.sub_time = time.strftime("%H:%M:%S", time.gmtime(sec))
@@ -102,11 +102,13 @@ def check(request):
                     quest.solved_by += 1
                     solved.solved = 1
                     userprofile.totlesub += 1
+
+                    request.session["solved"][int(Qid) - 1] = 'solved'
                     userprofile.save()
                     solved.save()
                     quest.save()
+                    request.session.save()
 
-                    print(solvedQue)
                     print("FLAG IS CORRECT!")
                     return HttpResponse('1')
 
@@ -187,25 +189,26 @@ def login1(request):
 def Quest(request):
     var = calc()
     if var != 0:
+        request.session["solved"] = ['' for i in range(ques)]
         user = User.objects.get(username=request.user.username)
         userprofile = UserProfile.objects.get(user=user)
         questions = Questions.objects.all().order_by('Qid')
         submission = Submission.objects.values().filter(user=userprofile).order_by('question_id')
 
-        solvedQue = []
+        solvedque = []
 
         for que in questions:
-            solvedQue.append(' ')
+            solvedque.append('')
 
         for sub in submission:
             if sub['solved'] == 1:
-                solvedQue[sub['question_id'] - 1] = 'solved'
-
-        zipped = zip(questions, solvedQue)
+                request.session["solved"][sub['question_id']-1] = 'solved'
+                #solvedque[sub['question_id'] - 1] = 'solved'
+        request.session.save()
+        zipped = zip(questions, request.session["solved"])
         print(zipped)
         return render(request, 'ctf/quests.html',
-                      {'questions': questions,'zipped': zipped, 'userprofile': userprofile, 'time': var, 'submission': submission,
-                       'solvedQue': solvedQue})
+                      {'questions': questions,'zipped': zipped, 'user': userprofile, 'time': var, 'submission': submission, 'solvedque': solvedque})
     else:
         return render(request, 'ctf/404.html')
 

@@ -32,14 +32,15 @@
         </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a href="index.html" class="pl-md-0 p-3 text-decoration-none text-light">
+                        <a href="/about" class="pl-md-0 p-3 text-decoration-none text-light">
                             <h3 class="bold"><span class="color_danger">LAKSHYA</span><span class="color_white">CTF</span></h3>
+
                         </a>
                     </div>
                     <div class="navbar-nav ml-auto">
 <!--                            <a href="/" class="p-3 text-decoration-none text-white bold">Home</a>-->
 <!--                            <a href="/about" class="p-3 text-decoration-none text-light bold">About</a>-->
-                        time = {{ time }}
+                        time = {{ time }}           points {{ user.score }}
                             <a href="/leaderboard" class="p-3 text-decoration-none text-light bold">Hackerboard</a>
                             <a href="/logout" class="p-3 text-decoration-none text-light bold">Logout</a>
 
@@ -85,7 +86,9 @@
                                 <p>{{ question.Qdes }}</p>
                                 <form method="POST"  id="my_event_form">
 				                {% csrf_token %}
+                                    {% if question.file %}
                                 <a target="_blank" href="/Uploads/{{ question.file }}" class="btn btn-outline-secondary btn-shadow"><span class="fa fa-download mr-2"></span>Download</a>
+                                    {% endif %}
                                 <a href="#hint" data-toggle="modal" data-target="#hint" class="btn btn-outline-secondary btn-shadow" onclick="getHint({{question.Qid}})"><span class="far fa-lightbulb mr-2"></span>Hint</a>
                                 <div class="input-group mt-3" >
                                     <div class="ht-tm-element custom-control custom-radio">

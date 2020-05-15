@@ -1,5 +1,12 @@
 # lakshya 2020
 
+## Getting started with this project
+kindly follow these steps inorde
+''' 
+	hello
+'''
+
+
 
 ## final update 
 :star2: :star2: :star2: :star2: :star2: :star2: 
